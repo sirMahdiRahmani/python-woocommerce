@@ -2,9 +2,9 @@ from woocommerce import API
 
 
 wcapi = API(
-    url="http://172.18.0.4",
-    consumer_key="ck_78dccc986fdfa4b7e1c28a7f319d93699d4aeee5",
-    consumer_secret="cs_5383d40226e6dd1cc7b9c0eb292e93d15936a85d",
+    url="http://192.168.1.23:2323",
+    consumer_key="ck_414a511358c0c847e5ce9c19bb670780d517e572",
+    consumer_secret="cs_f50d9b68e945da120c80a9604d1b7fdcca014212",
     wp_api=True,
     version="wc/v3",
     query_string_auth=True # Force Basic Authentication as query string true and using under HTTPS
