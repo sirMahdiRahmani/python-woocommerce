@@ -54,4 +54,4 @@ data = data = {
 }
 
 
-print(wcapi.post("products/attributes", data).json())
+print(wcapi.get("products?search=perspolis").json())
