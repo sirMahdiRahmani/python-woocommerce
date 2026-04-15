@@ -1,32 +1,35 @@
 import asyncio
-import telegram
 from telegram_woocommerce import *
 
-# async def main():
-#     bot = telegram.Bot("8274731879:AAG00TvwxuNRQaT3LOZKbL6ihAFP2duHXj4")
-#     async with bot:
-#         print(await bot.get_me())
 
+def main():
+    username = "sa"
+    team_name = "perspolis"
+    league_name = "premiere_league"
+    age_group = "adults"
 
+    tw = TelegramWoocommerce()
 
-# if __name__ == '__main__':
-#     asyncio.run(main())
+    customer = tw.get_customer(username)
 
-username = "109868"
-team_name = "perspolis"
-league_name = "premiere_league"
-age_group = "adults"
+    if (len(customer) == 0):
+        print("customer not exists")
+        customer = tw.create_customer(username)
+    else:
+        print("customer exist")
 
-tw = TelegramWoocommerce()
+    try:
+        product_id = tw.get_filtered_product(team_name, league_name, age_group)
+    except Exception as e:
+        print(e)
+        return
 
-customer = tw.get_customer(username)
-if (len(customer) == 0):
-    print("customer not exists")
-    customer = tw.create_customer(username)
-else:
-    print("customer exist")
+    order_detail = tw.create_order(customer["id"], [product_id], username)
 
-product_id = tw.get_filtered_product(team_name, league_name, age_group)
+    print(order_detail["payment_url"])
 
+    # todo: not update order customer id currectly and should edit in function
+    # print(tw.update_order(order_detail["id"], customer["id"]))
 
-print(tw.create_order(customer["id"], [product_id], username)["payment_url"])
+if __name__ == '__main__':
+    main()
