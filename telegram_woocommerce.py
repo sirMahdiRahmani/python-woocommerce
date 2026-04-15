@@ -90,16 +90,27 @@ class TelegramWoocommerce():
             "billing": {
                 "first_name": f"{firstname}",
                 "last_name": f"{lastname}",
-                "company": "",
                 "address_1": "Tehran",
                 "address_2": "",
-                "city": "Tehran",
-                "state": "CA",
-                "postcode": "",
-                "country": "Tehran",
+                "city": "تهران",
+                "state": "THR",
+                "postcode": "00000000",
+                "country": "IR",
                 "email": f"{username}@smart-football.ir",
-                "phone": "(555) 555-5555"
-            }
+                "phone": "+989192596042"
+            },
+            "shipping": {
+                "first_name": "Mahdi",
+                "last_name": "Rahmani",
+                "address_1": "Tehran",
+                "address_2": "",
+                "city": "تهران",
+                "state": "THR",
+                "postcode": "00000000",
+                "country": "IR",
+                "email": f"{username}@smart-football.ir",
+                "phone": "+989192596042"
+            },
         }
 
         return self.wpapi.post(f"customers", data).json()
@@ -122,7 +133,19 @@ class TelegramWoocommerce():
             "billing": {
                 "first_name": "Mahdi",
                 "last_name": "Rahmani",
-                "address_1": "969 Market",
+                "address_1": "Tehran",
+                "address_2": "",
+                "city": "تهران",
+                "state": "THR",
+                "postcode": "00000000",
+                "country": "IR",
+                "email": f"{username}@smart-football.ir",
+                "phone": "+989192596042"
+            },
+            "shipping": {
+                "first_name": "Mahdi",
+                "last_name": "Rahmani",
+                "address_1": "Tehran",
                 "address_2": "",
                 "city": "تهران",
                 "state": "THR",
@@ -138,6 +161,12 @@ class TelegramWoocommerce():
 
     def delete_order(self, order_id):
         return self.wpapi.delete(f"orders/{order_id}", params={"force": True}).json()
+    
+    
+    def update_order(self, order_id, customer_id):
+        # todo: not update order customer id currectly and should edit
+        return self.wpapi.put(f"orders/{order_id}", data={"cutomer_id": customer_id}).json()
+    
     
 # tw = TelegramWoocommerce()
 # print(json.dumps(tw.create_order(4, [12]), indent=2)) 
