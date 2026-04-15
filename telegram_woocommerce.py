@@ -22,9 +22,9 @@ class AgeGroups():
 
 class TelegramWoocommerce():
     def __init__(self):
-        self.url = "http://127.0.0.1:2323"
-        self.customer_key = "ck_1c3bdeac877b437f9a0e676d535a3b6d2a403a24"
-        self.customer_secret = "cs_686fde0ef54e7b377da66801189ba8553c46ecc2"
+        self.url = "https://smart-football.ir"
+        self.customer_key = "ck_8df52e3e3da56b9f1d8105fca532c86c9847e02d"
+        self.customer_secret = "cs_0d0cd5b8d7ab87265421c0273a4607b5fba129f7"
         self.team_name = ""
         self.league_name = ""
         self.age_group = ""
@@ -67,8 +67,13 @@ class TelegramWoocommerce():
 
         result = self.wcapi.get(filter_url).json()
 
-        return result["products"]
-        
+        try:
+            # print(result)
+            return result["products"][0]["id"]
+        except Exception as e:
+            print(e)
+            return result
+
     def get_customer(self, username):
         result = self.wpapi.get("customers", params={"email": f"{username}@smart-football.ir"}).json()
         if len(result) == 0:
@@ -99,7 +104,7 @@ class TelegramWoocommerce():
 
         return self.wpapi.post(f"customers", data).json()
 
-    def create_order(self, customer_id, products_id):
+    def create_order(self, customer_id, products_id, username):
         list_of_products = []
         for p in products_id:
             list_of_products.append(
@@ -110,21 +115,21 @@ class TelegramWoocommerce():
             )
         
         data = {
-            "payment_method": "bacs",
-            "payment_method_title": "Direct Bank Transfer",
+            "payment_method": "WC_NextPay",
+            "payment_method_title": "Next pay",
             "set_paid": False,
-            "customer_id": 4,
+            # "customer_id": customer_id,
             "billing": {
-                "first_name": "John",
-                "last_name": "Doe",
+                "first_name": "Mahdi",
+                "last_name": "Rahmani",
                 "address_1": "969 Market",
                 "address_2": "",
-                "city": "San Francisco",
-                "state": "CA",
-                "postcode": "94103",
-                "country": "US",
-                "email": "john.doe@example.com",
-                "phone": "(555) 555-5555"
+                "city": "تهران",
+                "state": "THR",
+                "postcode": "00000000",
+                "country": "IR",
+                "email": f"{username}@smart-football.ir",
+                "phone": "+989192596042"
             },
             "line_items": list_of_products
         }

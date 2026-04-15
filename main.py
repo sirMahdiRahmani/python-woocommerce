@@ -12,9 +12,9 @@ from telegram_woocommerce import *
 # if __name__ == '__main__':
 #     asyncio.run(main())
 
-username = "sadfasfdasfsdfsafasfsaf"
+username = "109868"
 team_name = "perspolis"
-league_name = "premiere-league"
+league_name = "premiere_league"
 age_group = "adults"
 
 tw = TelegramWoocommerce()
@@ -26,7 +26,7 @@ if (len(customer) == 0):
 else:
     print("customer exist")
 
-product_id = tw.get_filtered_product(team_name, league_name, age_group)[0]["id"]
+product_id = tw.get_filtered_product(team_name, league_name, age_group)
 
 
-print(tw.create_order(customer["id"], [product_id])["payment_url"])
+print(tw.create_order(customer["id"], [product_id], username)["payment_url"])
